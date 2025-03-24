@@ -13,7 +13,11 @@ on:
     # Runs at 06:15 UTC on Sunday
     - cron: '15 6 * * 0'
   workflow_dispatch:
-    # Allows manual triggering
+    inputs:
+      environment:
+        description: 'Cat to pet'
+        type: environment
+        required: true
 
 jobs:
   build:
@@ -27,3 +31,56 @@ jobs:
         
       - name: Run tests
         run: echo "OIIA OIIA"
+  
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'workflow_dispatch'
+    environment: Test
+    steps:
+      - name: Pet Test
+        run: echo "Petting Test..."
+  
+  load-test:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'workflow_dispatch'
+    environment: Load-Test
+    steps:
+      - name: Pet Load Test
+        run: echo "Pet Load-Test..."
+      - name: Wait
+        run: sleep 15
+  
+  production:
+    runs-on: ubuntu-latest
+    needs: [test, load-test]
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'Production'
+    environment:
+      name: Production
+      url: https://writeabout.net
+    steps:
+      - name: Step 1
+        run: |
+          echo "Step 1 deploying..."
+          sleep 10
+      
+      - name: Step 2
+        run: |
+          echo "Step 2 deploying..."
+          sleep 10
+      
+      - name: Step 3
+        run: |
+          echo "Step 3 deploying..."
+          sleep 10
+      
+      - name: Step 4
+        run: |
+          echo "Step 4 deploying..."
+          sleep 10
+      
+      - name: Step 5
+        run: |
+          echo "Step 5 deploying..."
+          sleep 10
