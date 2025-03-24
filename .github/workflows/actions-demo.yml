@@ -1,0 +1,31 @@
+name: Action Demo
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '.github/**'
+  pull_request:
+    branches:
+      - main
+  schedule:
+    # Runs at 06:15 UTC on Sunday
+    - cron: '15 6 * * 0'
+  workflow_dispatch:
+    # Allows manual triggering
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Run build process
+        run: echo "Your build process here"
+        
+      - name: Run tests
+        run: echo "Your test process here"
+        
+      # Add more steps as needed for your specific workflow
