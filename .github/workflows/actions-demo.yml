@@ -36,19 +36,19 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     if: github.event_name == 'workflow_dispatch'
-    environment: Test
+    environment: Feed-cat
     steps:
-      - name: Pet Test
-        run: echo "Petting Test..."
+      - name: Feed
+        run: echo "Feeding..."
   
   load-test:
     runs-on: ubuntu-latest
     needs: build
     if: github.event_name == 'workflow_dispatch'
-    environment: Load-Test
+    environment: Pet-cat
     steps:
-      - name: Pet Load Test
-        run: echo "Pet Load-Test..."
+      - name: Pet
+        run: echo "Petting..."
       - name: Wait
         run: sleep 15
   
@@ -57,7 +57,7 @@ jobs:
     needs: [test, load-test]
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'Production'
     environment:
-      name: Production
+      name: Release-cat
       url: https://writeabout.net
     steps:
       - name: Step 1
