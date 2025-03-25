@@ -12,7 +12,7 @@ jobs:
   call-workflow:
     uses: ./.github/workflows/reusable-cat.yml
     with:
-      username: ${{ inputs.username }}
+      who-to-greet: ${{ inputs.username }}
 
   use-output:
     needs: call-workflow
