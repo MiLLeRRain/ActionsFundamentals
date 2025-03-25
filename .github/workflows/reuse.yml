@@ -1,0 +1,22 @@
+name: Reuse other workflow
+on:
+  workflow_dispatch:
+    inputs:
+      username:
+        description: 'username'
+        required: true
+        default: 'MiLLeRRain'
+        type: string
+
+jobs:
+  call-workflow:
+    uses: ./.github/workflows/reusable-cat.yml
+    with:
+      username: ${{ inputs.username }}
+
+  use-output:
+    needs: call-workflow
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print current time
+        run: echo "The current time is ${{ needs.call-workflow.outputs.current-time }}"
