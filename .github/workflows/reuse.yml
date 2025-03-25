@@ -10,7 +10,7 @@ on:
 
 jobs:
   call-workflow:
-    uses: ./.github/workflows/reusable-cat.yml
+    uses: .github/workflows/reusable-cat.yml
     with:
       username: ${{ inputs.username }}
 
